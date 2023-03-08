@@ -22,9 +22,6 @@
 			"fr.universecorp.mysticalheart.MysticalHeartClient"
 		]
 	},
-	"mixins": [
-		"mysticalheart.mixins.json"
-	],
 	"depends": {
 		"fabricloader": ">=0.14.17",
 		"minecraft": "~1.19.3",

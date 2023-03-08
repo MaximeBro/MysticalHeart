@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "mysticalheart",
+	"version": "${version}",
+	"name": "MysticalHeart",
+	"description": "",
+	"authors": [
+		"Pulsion"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": ""
+	},
+	"license": "All Rights Reserved unless otherwise explicitly stated. - UniverseCorp",
+	"icon": "assets/modid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"fr.universecorp.mysticalheart.MysticalHeart"
+		],
+		"client": [
+			"fr.universecorp.mysticalheart.MysticalHeartClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.14.17",
+		"minecraft": "~1.19.3",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

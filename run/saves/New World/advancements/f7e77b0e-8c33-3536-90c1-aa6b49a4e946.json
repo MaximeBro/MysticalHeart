@@ -1,9 +1,57 @@
 {
+  "minecraft:recipes/food/cooked_beef_from_smoking": {
+    "criteria": {
+      "has_beef": "2023-03-08 17:37:27 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/cooked_beef_from_campfire_cooking": {
+    "criteria": {
+      "has_beef": "2023-03-08 17:37:27 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_something": "2023-03-08 17:37:26 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_a_mob": {
+    "criteria": {
+      "minecraft:enderman": "2023-03-08 17:45:57 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/cake": {
+    "criteria": {
+      "has_egg": "2023-03-08 17:37:11 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_all_mobs": {
+    "criteria": {
+      "minecraft:enderman": "2023-03-08 17:45:57 +0100"
+    },
+    "done": false
+  },
+  "minecraft:recipes/food/cooked_beef": {
+    "criteria": {
+      "has_beef": "2023-03-08 17:37:27 +0100"
+    },
+    "done": true
+  },
   "minecraft:adventure/adventuring_time": {
     "criteria": {
       "minecraft:plains": "2023-03-08 17:34:33 +0100"
     },
     "done": false
+  },
+  "minecraft:recipes/decorations/armor_stand": {
+    "criteria": {
+      "has_stone_slab": "2023-03-08 17:40:37 +0100"
+    },
+    "done": true
   },
   "DataVersion": 3218
 }

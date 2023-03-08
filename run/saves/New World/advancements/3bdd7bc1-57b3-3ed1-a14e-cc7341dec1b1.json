@@ -1,0 +1,21 @@
+{
+  "minecraft:recipes/food/cake": {
+    "criteria": {
+      "has_egg": "2023-03-08 21:58:32 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:plains": "2023-03-08 21:58:34 +0100"
+    },
+    "done": false
+  },
+  "minecraft:nether/netherite_armor": {
+    "criteria": {
+      "netherite_armor": "2023-03-08 21:58:32 +0100"
+    },
+    "done": true
+  },
+  "DataVersion": 3218
+}

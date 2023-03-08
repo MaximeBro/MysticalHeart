@@ -1,0 +1,193 @@
+{
+  "minecraft:recipes/building_blocks/light_blue_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/cooked_mutton_from_campfire_cooking": {
+    "criteria": {
+      "has_mutton": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/purple_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/lime_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/dark_oak_boat": {
+    "criteria": {
+      "in_water": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/pink_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/gray_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/black_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/blue_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/white_bed": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/green_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/white_carpet": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/brown_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/cooked_mutton_from_smoking": {
+    "criteria": {
+      "has_mutton": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:old_growth_pine_taiga": "2023-03-08 22:17:04 +0100",
+      "minecraft:taiga": "2023-03-08 22:16:22 +0100",
+      "minecraft:river": "2023-03-08 22:16:40 +0100",
+      "minecraft:forest": "2023-03-08 22:02:25 +0100",
+      "minecraft:old_growth_spruce_taiga": "2023-03-08 22:16:28 +0100"
+    },
+    "done": false
+  },
+  "minecraft:recipes/building_blocks/magenta_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/orange_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/birch_boat": {
+    "criteria": {
+      "in_water": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/mangrove_boat": {
+    "criteria": {
+      "in_water": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/painting": {
+    "criteria": {
+      "has_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/light_gray_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/red_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/white_banner": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/acacia_boat": {
+    "criteria": {
+      "in_water": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/oak_boat": {
+    "criteria": {
+      "in_water": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/cyan_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/yellow_wool": {
+    "criteria": {
+      "has_white_wool": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/cooked_mutton": {
+    "criteria": {
+      "has_mutton": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_something": "2023-03-08 22:05:00 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/jungle_boat": {
+    "criteria": {
+      "in_water": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/spruce_boat": {
+    "criteria": {
+      "in_water": "2023-03-08 22:05:01 +0100"
+    },
+    "done": true
+  },
+  "DataVersion": 3218
+}
