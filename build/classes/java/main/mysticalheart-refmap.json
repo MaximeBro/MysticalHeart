@@ -1,0 +1,14 @@
+{
+  "mappings": {
+    "fr/universecorp/mysticalheart/mixin/PlayerEntityMixin": {
+      "tick": "Lnet/minecraft/class_1657;method_5773()V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "fr/universecorp/mysticalheart/mixin/PlayerEntityMixin": {
+        "tick": "Lnet/minecraft/class_1657;method_5773()V"
+      }
+    }
+  }
+}
