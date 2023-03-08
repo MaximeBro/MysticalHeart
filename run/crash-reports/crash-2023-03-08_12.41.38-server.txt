@@ -1,0 +1,153 @@
+---- Minecraft Crash Report ----
+// I bet Cylons wouldn't have this problem.
+
+Time: 2023-03-08 12:41:38
+Description: Ticking player
+
+java.lang.IllegalStateException: Rendersystem called from wrong thread
+	at com.mojang.blaze3d.systems.RenderSystem.constructThreadException(RenderSystem.java:174)
+	at com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread(RenderSystem.java:163)
+	at com.mojang.blaze3d.systems.RenderSystem.enableTexture(RenderSystem.java:459)
+	at net.minecraft.entity.player.PlayerEntity.renderHpBar(PlayerEntity.java:2413)
+	at net.minecraft.entity.player.PlayerEntity.handler$zge000$mysticalheart$tick(PlayerEntity.java:2386)
+	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:327)
+	at net.minecraft.server.network.ServerPlayerEntity.playerTick(ServerPlayerEntity.java:504)
+	at net.minecraft.server.network.ServerPlayNetworkHandler.tick(ServerPlayNetworkHandler.java:266)
+	at net.minecraft.network.ClientConnection.tick(ClientConnection.java:248)
+	at net.minecraft.server.ServerNetworkIo.tick(ServerNetworkIo.java:183)
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:897)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:830)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:99)
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:676)
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:264)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at com.mojang.blaze3d.systems.RenderSystem.constructThreadException(RenderSystem.java:174)
+	at com.mojang.blaze3d.systems.RenderSystem.assertOnRenderThread(RenderSystem.java:163)
+	at com.mojang.blaze3d.systems.RenderSystem.enableTexture(RenderSystem.java:459)
+	at net.minecraft.entity.player.PlayerEntity.renderHpBar(PlayerEntity.java:2413)
+	at net.minecraft.entity.player.PlayerEntity.handler$zge000$mysticalheart$tick(PlayerEntity.java:2386)
+	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:327)
+
+-- Player being ticked --
+Details:
+	Entity Type: minecraft:player (net.minecraft.server.network.ServerPlayerEntity)
+	Entity ID: 303
+	Entity Name: Player997
+	Entity's Exact location: 16.38, 71.00, 25.43
+	Entity's Block location: World: (16,71,25), Section: (at 0,7,9 in 1,4,1; chunk contains blocks 16,-64,16 to 31,319,31), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,-64,0 to 511,319,511)
+	Entity's Momentum: 0.00, -0.08, 0.00
+	Entity's Passengers: []
+	Entity's Vehicle: null
+Stacktrace:
+	at net.minecraft.server.network.ServerPlayerEntity.playerTick(ServerPlayerEntity.java:504)
+	at net.minecraft.server.network.ServerPlayNetworkHandler.tick(ServerPlayNetworkHandler.java:266)
+	at net.minecraft.network.ClientConnection.tick(ClientConnection.java:248)
+	at net.minecraft.server.ServerNetworkIo.tick(ServerNetworkIo.java:183)
+	at net.minecraft.server.MinecraftServer.tickWorlds(MinecraftServer.java:897)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:830)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:99)
+	at net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:676)
+	at net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:264)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.19.3
+	Minecraft Version ID: 1.19.3
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 17.0.5, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode, sharing), Oracle Corporation
+	Memory: 1233125384 bytes (1176 MiB) / 3353346048 bytes (3198 MiB) up to 4200595456 bytes (4006 MiB)
+	CPUs: 16
+	Processor Vendor: GenuineIntel
+	Processor Name: 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+	Identifier: Intel64 Family 6 Model 141 Stepping 1
+	Microarchitecture: unknown
+	Frequency (GHz): 2.30
+	Number of physical packages: 1
+	Number of physical CPUs: 8
+	Number of logical CPUs: 16
+	Graphics card #0 name: Intel(R) UHD Graphics
+	Graphics card #0 vendor: Intel Corporation (0x8086)
+	Graphics card #0 VRAM (MB): 1024.00
+	Graphics card #0 deviceId: 0x9a60
+	Graphics card #0 versionInfo: DriverVersion=30.0.101.2079
+	Graphics card #1 name: NVIDIA GeForce RTX 3060 Laptop GPU
+	Graphics card #1 vendor: NVIDIA (0x10de)
+	Graphics card #1 VRAM (MB): 4095.00
+	Graphics card #1 deviceId: 0x2520
+	Graphics card #1 versionInfo: DriverVersion=31.0.15.2824
+	Memory slot #0 capacity (MB): 8192.00
+	Memory slot #0 clockSpeed (GHz): 3.20
+	Memory slot #0 type: DDR4
+	Memory slot #1 capacity (MB): 8192.00
+	Memory slot #1 clockSpeed (GHz): 3.20
+	Memory slot #1 type: DDR4
+	Virtual memory max (MB): 28821.82
+	Virtual memory used (MB): 18025.96
+	Swap memory total (MB): 12800.00
+	Swap memory used (MB): 84.35
+	JVM Flags: 0 total; 
+	Fabric Mods: 
+		fabric-api: Fabric API 0.75.1+1.19.3
+		fabric-api-base: Fabric API Base 0.4.21+70be179c85
+		fabric-api-lookup-api-v1: Fabric API Lookup API (v1) 1.6.20+49abcf7e85
+		fabric-biome-api-v1: Fabric Biome API (v1) 12.1.1+b5d379b085
+		fabric-block-api-v1: Fabric Block API (v1) 1.0.5+e022e5d185
+		fabric-blockrenderlayer-v1: Fabric BlockRenderLayer Registration (v1) 1.1.31+928d44d585
+		fabric-client-tags-api-v1: Fabric Client Tags 1.0.12+1134c5b885
+		fabric-command-api-v2: Fabric Command API (v2) 2.2.1+3fc4752e85
+		fabric-content-registries-v0: Fabric Content Registries (v0) 3.5.1+1d37d50285
+		fabric-convention-tags-v1: Fabric Convention Tags 1.2.2+8e4e694f85
+		fabric-crash-report-info-v1: Fabric Crash Report Info (v1) 0.2.14+aeb40ebe85
+		fabric-data-generation-api-v1: Fabric Data Generation API (v1) 11.3.1+40dc7a9485
+		fabric-dimensions-v1: Fabric Dimensions API (v1) 2.1.42+00a2eb1085
+		fabric-entity-events-v1: Fabric Entity Events (v1) 1.5.7+b83334a085
+		fabric-events-interaction-v0: Fabric Events Interaction (v0) 0.4.40+3baeb27a85
+		fabric-game-rule-api-v1: Fabric Game Rule API (v1) 1.0.30+99f9db8085
+		fabric-gametest-api-v1: Fabric Game Test API (v1) 1.2.0+2ff127f585
+		fabric-item-api-v1: Fabric Item API (v1) 2.1.10+312c329485
+		fabric-item-group-api-v1: Fabric Item Group API (v1) 2.1.12+1134c5b885
+		fabric-key-binding-api-v1: Fabric Key Binding API (v1) 1.0.31+bc01e09785
+		fabric-lifecycle-events-v1: Fabric Lifecycle Events (v1) 2.2.10+23a79c8a85
+		fabric-loot-api-v2: Fabric Loot API (v2) 1.1.20+75e9821185
+		fabric-message-api-v1: Fabric Message API (v1) 5.1.0+c85585f885
+		fabric-mining-level-api-v1: Fabric Mining Level API (v1) 2.1.31+49abcf7e85
+		fabric-models-v0: Fabric Models (v0) 0.3.27+11ba9c3b85
+		fabric-networking-api-v1: Fabric Networking API (v1) 1.2.17+4017a8cb85
+		fabric-object-builder-api-v1: Fabric Object Builder API (v1) 5.4.1+eb2a3ba985
+		fabric-particles-v1: Fabric Particles (v1) 1.0.20+f1e4495b85
+		fabric-recipe-api-v1: Fabric Recipe API (v1) 1.0.1+5176f73d85
+		fabric-registry-sync-v0: Fabric Registry Sync (v0) 2.1.0+f7b4d36485
+		fabric-renderer-api-v1: Fabric Renderer API (v1) 2.2.2+3a95925a85
+		fabric-renderer-indigo: Fabric Renderer - Indigo 0.8.0+3a95925a85
+		fabric-rendering-data-attachment-v1: Fabric Rendering Data Attachment (v1) 0.3.25+afca2f3e85
+		fabric-rendering-fluids-v1: Fabric Rendering Fluids (v1) 3.0.18+f1e4495b85
+		fabric-rendering-v1: Fabric Rendering (v1) 1.12.1+eb2a3ba985
+		fabric-resource-conditions-api-v1: Fabric Resource Conditions API (v1) 2.3.0+e63306e085
+		fabric-resource-loader-v0: Fabric Resource Loader (v0) 0.10.5+a91e48b785
+		fabric-screen-api-v1: Fabric Screen API (v1) 1.0.41+f1e4495b85
+		fabric-screen-handler-api-v1: Fabric Screen Handler API (v1) 1.3.13+99f9db8085
+		fabric-sound-api-v1: Fabric Sound API (v1) 1.0.8+75e9821185
+		fabric-transfer-api-v1: Fabric Transfer API (v1) 2.1.15+ccd377ba85
+		fabric-transitive-access-wideners-v1: Fabric Transitive Access Wideners (v1) 2.3.1+40dc7a9485
+		fabricloader: Fabric Loader 0.14.17
+		java: Java HotSpot(TM) 64-Bit Server VM 17
+		minecraft: Minecraft 1.19.3
+		mysticalheart: MysticalHeart 1.0.0
+	Server Running: true
+	Player Count: 1 / 8; [ServerPlayerEntity['Player997'/303, l='ServerLevel[New World]', x=16.38, y=71.00, z=25.43]]
+	Data Packs: vanilla, fabric
+	Enabled Feature Flags: minecraft:vanilla
+	World Generation: Stable
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'fabric'; Server brand changed to 'fabric'
+	Launched Version: Fabric
