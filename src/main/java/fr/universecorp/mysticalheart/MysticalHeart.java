@@ -1,5 +1,6 @@
 package fr.universecorp.mysticalheart;
 
+import fr.universecorp.mysticalheart.config.Configs;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -12,7 +13,7 @@ public class MysticalHeart implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-
+		Configs.registerConfigs();
 
 	}
 }

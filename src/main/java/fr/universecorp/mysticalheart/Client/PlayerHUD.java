@@ -2,6 +2,7 @@ package fr.universecorp.mysticalheart.Client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import fr.universecorp.mysticalheart.MysticalHeart;
+import fr.universecorp.mysticalheart.config.Configs;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -37,9 +38,9 @@ public class PlayerHUD implements HudRenderCallback {
         }
 
         Vec3d playerPos = playerEntity.getEyePos();
-        Vec3d endPos = playerPos.add(playerEntity.getRotationVector().multiply(10));
-        Box box = playerEntity.getBoundingBox().expand(10);
-        EntityHitResult entityHitResult = ProjectileUtil.raycast(playerEntity, playerPos, endPos, box, entity -> entity.isLiving(), 500);
+        Vec3d endPos = playerPos.add(playerEntity.getRotationVector().multiply(Configs.HUD_DISTANCE));
+        Box box = playerEntity.getBoundingBox().expand(Configs.HUD_DISTANCE);
+        EntityHitResult entityHitResult = ProjectileUtil.raycast(playerEntity, playerPos, endPos, box, entity -> entity.isLiving(), 0);
 
         if (playerEntity != null && entityHitResult != null) {
             Entity entity = entityHitResult.getEntity();
@@ -47,24 +48,37 @@ public class PlayerHUD implements HudRenderCallback {
             if(entity instanceof LivingEntity livingEntity) {
                 int maxHealth = (int) livingEntity.getMaxHealth();
                 int currentHealth = (int) livingEntity.getHealth();
+                int armor = livingEntity.getArmor();
                 int ratio = currentHealth * 64 / maxHealth;
 
+                // Background
                 RenderSystem.setShader(GameRenderer::getPositionTexProgram);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.setShaderTexture(0, TEXTURE);
 
                 DrawableHelper.drawTexture(matrixStack, 5, 5, 0, 0, 150, 67, 256, 256);
+
+                // Health bar
                 DrawableHelper.drawTexture(matrixStack, 71, 48, 66, 67, ratio, 11, 256, 256);
 
+                // Texts
+                // - Name -
                 TextRenderer textRenderer = MinecraftClient.getInstance().inGameHud.getTextRenderer();
                 Text entityName = livingEntity.getName();
                 textRenderer.draw(matrixStack, entityName,
-                        64 + 32 - (int)(textRenderer.getWidth(entityName) / 4), 18, 0x131313);
+                        64 + 32 - (int)(textRenderer.getWidth(entityName) / 4), 15, Configs.NAME_COLOR);
 
+                // - Health -
                 Text healthDisplay = Text.of(currentHealth + "/" + maxHealth);
                 textRenderer.draw(matrixStack, healthDisplay,
-                        64 + 32 - (int)(textRenderer.getWidth(healthDisplay) / 4), 35, 0x3D3D3D);
+                        64 + 32 - (int)(textRenderer.getWidth(healthDisplay) / 4), 35, Configs.HEALTH_COLOR);
 
+                // - Armor -
+                Text armorDisplay = Text.of(armor + "");
+                textRenderer.draw(matrixStack, armorDisplay,
+                        64 + 32 - (int)(textRenderer.getWidth(armorDisplay) / 4), 25, Configs.ARMOR_COLOR);
+
+                // Entity 3D rendering
                 float livingH = livingEntity.getHeight();
                 int h = 20;
                 int posY = 54;
