@@ -39,18 +39,8 @@ public class Configs {
             this.assignValues();
         }
 
-
-
         public void createConfig() {
             if(!this.configExists()) {
-                try {
-                    this.configFile.createNewFile();
-                } catch (IOException e) { e.printStackTrace(); }
-                ConfigProvider.createDefaultFile(ConfigProvider.getDefaultConfig(), this.configFile);
-            }
-
-            if(!this.isConfigValid()) {
-                this.configFile.delete();
                 try {
                     this.configFile.createNewFile();
                 } catch (IOException e) { e.printStackTrace(); }
@@ -59,7 +49,7 @@ public class Configs {
         }
 
         public boolean configExists() {
-            return this.configFile.exists();
+            return this.configFile.exists() && this.isConfigValid();
         }
 
         public boolean isConfigValid() {

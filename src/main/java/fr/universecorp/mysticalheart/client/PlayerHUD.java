@@ -1,4 +1,4 @@
-package fr.universecorp.mysticalheart.Client;
+package fr.universecorp.mysticalheart.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import fr.universecorp.mysticalheart.MysticalHeart;
@@ -51,32 +51,41 @@ public class PlayerHUD implements HudRenderCallback {
                 int armor = livingEntity.getArmor();
                 int ratio = currentHealth * 64 / maxHealth;
 
-                // Background
                 RenderSystem.setShader(GameRenderer::getPositionTexProgram);
                 RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                 RenderSystem.setShaderTexture(0, TEXTURE);
 
+                // Background
                 DrawableHelper.drawTexture(matrixStack, 5, 5, 0, 0, 150, 67, 256, 256);
 
                 // Health bar
-                DrawableHelper.drawTexture(matrixStack, 71, 48, 66, 67, ratio, 11, 256, 256);
+                DrawableHelper.drawTexture(matrixStack, 71, 52, 66, 67, ratio, 11, 256, 256);
+
+                // Armor
+                if(armor > 0) {
+                    DrawableHelper.drawTexture(matrixStack, 74, 28, 41, 68, 9, 9, 256, 256);
+                }
 
                 // Texts
                 // - Name -
                 TextRenderer textRenderer = MinecraftClient.getInstance().inGameHud.getTextRenderer();
                 Text entityName = livingEntity.getName();
                 textRenderer.draw(matrixStack, entityName,
-                        64 + 32 - (int)(textRenderer.getWidth(entityName) / 4), 15, Configs.NAME_COLOR);
+                        64 + 32 - (int)(textRenderer.getWidth(entityName) / 4) - 5, 16, Configs.NAME_COLOR);
 
                 // - Health -
-                Text healthDisplay = Text.of(currentHealth + "/" + maxHealth);
+                int posX = currentHealth > 99 ? 88 : 91;
+                Text healthDisplay = Text.of(currentHealth < 10000 ? (currentHealth + "/" + maxHealth) : (currentHealth/100 + "K/" + maxHealth/100 + "K"));
                 textRenderer.draw(matrixStack, healthDisplay,
-                        64 + 32 - (int)(textRenderer.getWidth(healthDisplay) / 4), 35, Configs.HEALTH_COLOR);
+                        posX, 39, Configs.HEALTH_COLOR);
 
                 // - Armor -
-                Text armorDisplay = Text.of(armor + "");
-                textRenderer.draw(matrixStack, armorDisplay,
-                        64 + 32 - (int)(textRenderer.getWidth(armorDisplay) / 4), 25, Configs.ARMOR_COLOR);
+                if(armor > 0) {
+                    Text armorDisplay = Text.of(armor + "");
+                    textRenderer.draw(matrixStack, armorDisplay,
+                            92, 29, Configs.ARMOR_COLOR);
+                }
+
 
                 // Entity 3D rendering
                 float livingH = livingEntity.getHeight();

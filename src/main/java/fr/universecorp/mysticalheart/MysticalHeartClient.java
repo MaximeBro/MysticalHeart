@@ -1,6 +1,6 @@
 package fr.universecorp.mysticalheart;
 
-import fr.universecorp.mysticalheart.Client.PlayerHUD;
+import fr.universecorp.mysticalheart.client.PlayerHUD;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 

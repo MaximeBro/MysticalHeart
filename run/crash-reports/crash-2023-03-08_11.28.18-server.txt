@@ -4,7 +4,7 @@
 Time: 2023-03-08 11:28:18
 Description: Ticking player
 
-java.lang.NoSuchMethodError: 'void fr.universecorp.mysticalheart.Client.PlayerHUD.setStats(net.minecraft.entity.player.PlayerEntity, net.minecraft.entity.LivingEntity, float, float)'
+java.lang.NoSuchMethodError: 'void fr.universecorp.mysticalheart.client.PlayerHUD.setStats(net.minecraft.entity.player.PlayerEntity, net.minecraft.entity.LivingEntity, float, float)'
 	at net.minecraft.entity.player.PlayerEntity.renderHpBar(PlayerEntity.java:3394)
 	at net.minecraft.entity.player.PlayerEntity.handler$zij000$mysticalheart$tick(PlayerEntity.java:3378)
 	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:327)
