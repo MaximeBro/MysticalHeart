@@ -4,6 +4,8 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.*;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Configs {
@@ -13,6 +15,7 @@ public class Configs {
     public static int ARMOR_COLOR;
     public static int HEALTH_COLOR;
     public static int HUD_DISTANCE;
+    public static boolean HUD_DISPLAYED;
 
     public static void registerConfigs() {
         CONFIG = new Config("MysticalHeart.cfg");
@@ -20,6 +23,7 @@ public class Configs {
         ARMOR_COLOR = CONFIG.getArmorColor();
         HEALTH_COLOR = CONFIG.getHealthColor();
         HUD_DISTANCE = CONFIG.getHudDistance();
+        HUD_DISPLAYED = CONFIG.getHudDisplayed();
     }
 
     public static class Config {
@@ -31,6 +35,7 @@ public class Configs {
         private int armorColor;
         private int healthColor;
         private int hudDistance;
+        private boolean hudDisplayed;
 
         public Config(String filename) {
             this.configPath = Path.of(FabricLoader.getInstance().getConfigDir() + "\\" + filename);
@@ -40,50 +45,12 @@ public class Configs {
         }
 
         public void createConfig() {
-            if(!this.configExists()) {
+            if(!this.configFile.exists()) {
                 try {
                     this.configFile.createNewFile();
                 } catch (IOException e) { e.printStackTrace(); }
-                ConfigProvider.createDefaultFile(ConfigProvider.getDefaultConfig(), this.configFile);
+                ConfigProvider.createDefaultFile(this.configFile);
             }
-        }
-
-        public boolean configExists() {
-            return this.configFile.exists() && this.isConfigValid();
-        }
-
-        public boolean isConfigValid() {
-            boolean distance = false;
-            int colors = 0;
-            try {
-                Scanner scanner = new Scanner(this.configFile);
-
-                while(scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    if(line.length() > 0 && line.charAt(0) == '#') { continue; }
-
-                    if(line.contains("name.color") || line.contains("armor.color") || line.contains("health.color")) {
-                        String data = line.substring(line.length()-8);
-                        if(!data.contains("0x")) {
-                            return false;
-                        }
-                        colors++;
-                    }
-
-                    if(line.contains("hud.distance")) {
-                        String data = line.substring(line.length()-2);
-                        if(!data.matches("[0-9]+")) {
-                            return false;
-                        }
-                        distance = true;
-                    }
-                }
-
-            } catch (FileNotFoundException exception) {
-                return false;
-            }
-
-            return colors == 3 && distance;
         }
 
 
@@ -92,8 +59,43 @@ public class Configs {
             this.armorColor = this.getValue("armor.color", 6);
             this.healthColor = this.getValue("health.color", 6);
             this.hudDistance = this.getValue("hud.distance", 2);
+            this.hudDisplayed = this.getValue("displayed");
         }
 
+        public void writeValues(boolean displayed) {
+            Configs.HUD_DISPLAYED = displayed;
+            this.hudDisplayed = displayed;
+
+            try {
+                this.configFile.delete();
+                this.configFile = this.configPath.toFile();
+                this.configFile.createNewFile();
+            } catch (IOException e) { e.printStackTrace(); }
+            ConfigProvider.createNewFile(this.configFile, displayed);
+
+        }
+
+
+        public boolean getValue(String key) {
+
+            String value = "";
+
+            try {
+                Scanner scanner = new Scanner(this.configFile);
+                while(scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if(line.contains(key) && line.length() >= 14) {
+
+                        value = line.substring(10);
+                        value.toLowerCase();
+                    }
+                }
+                scanner.close();
+            } catch (FileNotFoundException ignored) { }
+
+
+            return value.equals("") || value.equals("false") ? false : value.equals("true");
+        }
 
         public int getValue(String key, int length) {
             String value = "";
@@ -105,6 +107,7 @@ public class Configs {
                         value = line.substring(line.length()-length);
                     }
                 }
+                scanner.close();
 
             } catch (FileNotFoundException ignored) { return 0; }
 
@@ -115,6 +118,7 @@ public class Configs {
         public int getArmorColor() { return this.armorColor; }
         public int getHealthColor() { return this.healthColor; }
         public int getHudDistance() { return this.hudDistance; }
+        public boolean getHudDisplayed() { return this.hudDisplayed; }
     }
 
 }

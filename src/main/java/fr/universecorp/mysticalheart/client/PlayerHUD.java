@@ -14,6 +14,8 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.text.Text;
@@ -28,6 +30,9 @@ public class PlayerHUD implements HudRenderCallback {
     final Identifier TEXTURE = new Identifier(MysticalHeart.MODID, "textures/hud/background.png");
 
     private PlayerEntity playerEntity;
+    private LivingEntity lastEntity;
+
+    private int lastTimeToRender = 0;
 
 
     @Override
@@ -42,67 +47,103 @@ public class PlayerHUD implements HudRenderCallback {
         Box box = playerEntity.getBoundingBox().expand(Configs.HUD_DISTANCE);
         EntityHitResult entityHitResult = ProjectileUtil.raycast(playerEntity, playerPos, endPos, box, entity -> entity.isLiving(), 0);
 
-        if (playerEntity != null && entityHitResult != null) {
-            Entity entity = entityHitResult.getEntity();
-
-            if(entity instanceof LivingEntity livingEntity) {
-                int maxHealth = (int) livingEntity.getMaxHealth();
-                int currentHealth = (int) livingEntity.getHealth();
-                int armor = livingEntity.getArmor();
-                int ratio = currentHealth * 64 / maxHealth;
-
-                RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-                RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-                RenderSystem.setShaderTexture(0, TEXTURE);
-
-                // Background
-                DrawableHelper.drawTexture(matrixStack, 5, 5, 0, 0, 150, 67, 256, 256);
-
-                // Health bar
-                DrawableHelper.drawTexture(matrixStack, 71, 52, 66, 67, ratio, 11, 256, 256);
-
-                // Armor
-                if(armor > 0) {
-                    DrawableHelper.drawTexture(matrixStack, 74, 28, 41, 68, 9, 9, 256, 256);
-                }
-
-                // Texts
-                // - Name -
-                TextRenderer textRenderer = MinecraftClient.getInstance().inGameHud.getTextRenderer();
-                Text entityName = livingEntity.getName();
-                textRenderer.draw(matrixStack, entityName,
-                        64 + 32 - (int)(textRenderer.getWidth(entityName) / 4) - 5, 16, Configs.NAME_COLOR);
-
-                // - Health -
-                int posX = currentHealth > 99 ? 88 : 91;
-                Text healthDisplay = Text.of(currentHealth < 10000 ? (currentHealth + "/" + maxHealth) : (currentHealth/100 + "K/" + maxHealth/100 + "K"));
-                textRenderer.draw(matrixStack, healthDisplay,
-                        posX, 39, Configs.HEALTH_COLOR);
-
-                // - Armor -
-                if(armor > 0) {
-                    Text armorDisplay = Text.of(armor + "");
-                    textRenderer.draw(matrixStack, armorDisplay,
-                            92, 29, Configs.ARMOR_COLOR);
-                }
-
-
-                // Entity 3D rendering
-                float livingH = livingEntity.getHeight();
-                int h = 20;
-                int posY = 54;
-                if(livingH*10 > 20)  { h = 18; }
-                if(livingH*10 <= 20) { h = 20; }
-                if(livingH*10 >= 15 && livingH*10 < 20) { h = 23; }
-                if(livingH*10 < 15)  { h = 30; }
-
-                if(h < 20) { posY = 58; }
-
-                this.drawEntity(31, posY + 8, h, livingEntity);
+        if(playerEntity != null && entityHitResult != null) {
+            if(entityHitResult.getEntity() instanceof LivingEntity entity) {
+                this.lastEntity = entity;
             }
         }
 
 
+        if(this.lastEntity != null) {
+            this.lastTimeToRender++;
+
+            if(this.lastTimeToRender >= 600) {
+                this.lastEntity = null;
+                this.lastTimeToRender = 0;
+            }
+        }
+
+
+
+        if(this.lastTimeToRender > 0) {
+            this.renderHud(matrixStack, this.lastEntity, playerEntity);
+        } else {
+            if (playerEntity != null && entityHitResult != null) {
+                Entity entity = entityHitResult.getEntity();
+                this.renderHud(matrixStack, entity, playerEntity);
+            }
+        }
+
+
+    }
+
+    public void renderHud(MatrixStack matrixStack, Entity entity, PlayerEntity player) {
+        if(entity instanceof LivingEntity livingEntity) {
+
+            if(!Configs.HUD_DISPLAYED) {
+                return;
+            }
+
+            if(this.lastEntity == null || this.lastEntity != entity) {
+                this.lastEntity = (LivingEntity) entity;
+            }
+
+            ((LivingEntity) entity).addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 100), player);
+
+            int maxHealth = (int) livingEntity.getMaxHealth();
+            int currentHealth = (int) livingEntity.getHealth();
+            int armor = livingEntity.getArmor();
+            int ratio = currentHealth * 64 / maxHealth;
+
+            RenderSystem.setShader(GameRenderer::getPositionTexProgram);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderTexture(0, TEXTURE);
+
+            // Background
+            DrawableHelper.drawTexture(matrixStack, 5, 5, 0, 0, 150, 67, 256, 256);
+
+            // Health bar
+            DrawableHelper.drawTexture(matrixStack, 71, 52, 66, 67, ratio, 11, 256, 256);
+
+            // Armor
+            if(armor > 0) {
+                DrawableHelper.drawTexture(matrixStack, 74, 28, 41, 68, 9, 9, 256, 256);
+            }
+
+            // Texts
+            // - Name -
+            TextRenderer textRenderer = MinecraftClient.getInstance().inGameHud.getTextRenderer();
+            Text entityName = livingEntity.getName();
+            textRenderer.draw(matrixStack, entityName,
+                    64 + 32 - (int)(textRenderer.getWidth(entityName) / 4) - 5, 16, Configs.NAME_COLOR);
+
+            // - Health -
+            int posX = currentHealth > 99 ? 88 : 91;
+            Text healthDisplay = Text.of(currentHealth < 10000 ? (currentHealth + "/" + maxHealth) : (currentHealth/100 + "K/" + maxHealth/100 + "K"));
+            textRenderer.draw(matrixStack, healthDisplay,
+                    posX, 39, Configs.HEALTH_COLOR);
+
+            // - Armor -
+            if(armor > 0) {
+                Text armorDisplay = Text.of(armor + "");
+                textRenderer.draw(matrixStack, armorDisplay,
+                        92, 29, Configs.ARMOR_COLOR);
+            }
+
+
+            // Entity 3D rendering
+            float livingH = this.lastEntity.getHeight();
+            int h = 20;
+            int posY = 54;
+            if(livingH*10 > 20)  { h = 18; }
+            if(livingH*10 <= 20) { h = 20; }
+            if(livingH*10 >= 15 && livingH*10 < 20) { h = 23; }
+            if(livingH*10 < 15)  { h = 30; }
+
+            if(h < 20) { posY = 58; }
+
+            this.drawEntity(31, posY + 8, h, this.lastEntity);
+        }
     }
 
     public void drawEntity(int x, int y, int size, LivingEntity entity) {
